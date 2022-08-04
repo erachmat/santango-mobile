@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1066532373059",
+    "project_id": "dapurgo-1c3ff",
+    "storage_bucket": "dapurgo-1c3ff.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1066532373059:android:123f4c58d84ffda056caf6",
+        "android_client_info": {
+          "package_name": "dapurgo.dev.dapurgo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1066532373059-ki5ud5clf9k21mlrttkfenkm33sv0ud8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAbW2aOGUDZKzk_BrtDjnFS2b49H1JaHcY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1066532373059-ki5ud5clf9k21mlrttkfenkm33sv0ud8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
