@@ -9,11 +9,12 @@ class AppTextField extends StatelessWidget {
   final TextEditingController textController;
   final String hintText;
   final IconData icon;
+  final bool obsecure;
 
   const AppTextField({Key? key,
   required this.textController,
   required this.hintText,
-  required this.icon}) : super(key: key);
+  required this.icon, required this.obsecure}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -34,6 +35,7 @@ class AppTextField extends StatelessWidget {
       ),
       child: TextField(
         controller: textController,
+        obscureText: obsecure,
         decoration: InputDecoration(
             hintText: hintText,
             prefixIcon: Icon(icon, color: AppColor.mainColor,),

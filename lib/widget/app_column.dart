@@ -24,12 +24,12 @@ class AppColumn extends StatelessWidget {
             Wrap(
                 children: List.generate(5, (index) {return Icon(Icons.star, color: AppColor.mainColor, size: 15,);})
             ),
-            SizedBox(width: Dimensions.width10,),
-            SmallText(text: "4.5"),
-            SizedBox(width: Dimensions.width10,),
-            SmallText(text: "1287"),
-            SizedBox(width: Dimensions.width10,),
-            SmallText(text: "comments")
+            // SizedBox(width: Dimensions.width10,),
+            // SmallText(text: "5"),
+            // SizedBox(width: Dimensions.width10,),
+            // SmallText(text: "0"),
+            // SizedBox(width: Dimensions.width10,),
+            // SmallText(text: "comments")
           ],
         ),
         SizedBox(height: Dimensions.height20,),
@@ -38,17 +38,17 @@ class AppColumn extends StatelessWidget {
           children: [
             IconAndTextWidget(
               icon: Icons.circle_sharp,
-              text: "Normal",
+              text: "Available",
               iconColor: AppColor.mainColor,
             ),
             IconAndTextWidget(
               icon: Icons.location_on,
-              text: "1.7 Km",
+              text: "0 Km",
               iconColor: AppColor.mainColor,
             ),
             IconAndTextWidget(
               icon: Icons.access_time_rounded,
-              text: "32 min",
+              text: "0 min",
               iconColor: AppColor.mainColor,
             ),
           ],

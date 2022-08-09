@@ -179,7 +179,7 @@ class CartHistory extends StatelessWidget {
                 child: const Center(
                   child: NoDataPage(
                     text: "You didn't buy anything so far !",
-                     imgPath: "assets/image/food02.jpg",),
+                     imgPath: "assets/image/Not Found.png",),
                 ));
           })
         ],

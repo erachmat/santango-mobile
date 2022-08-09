@@ -1,5 +1,9 @@
 
+import 'package:dapurgo/controller/login_controller.dart';
+import 'package:dapurgo/models/login_model.dart';
+import 'package:dapurgo/pages/account/account_page.dart';
 import 'package:dapurgo/pages/auth/sign_up_page.dart';
+import 'package:dapurgo/utils/app_constants.dart';
 import 'package:dapurgo/utils/dimensions.dart';
 import 'package:dapurgo/widget/app_text_field.dart';
 import 'package:dapurgo/widget/big_text.dart';
@@ -8,7 +12,10 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../base/show_custom_snackbar.dart';
 import '../../colors.dart';
+import '../../data/api/api_client.dart';
+import '../../routes/routes_helper.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({Key? key}) : super(key: key);
@@ -16,10 +23,36 @@ class SignInPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
+    // final ApiClient apiClient = ApiClient(appBaseUrl: AppConstant.BASE_URL);
+
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
-    var nameController = TextEditingController();
-    var phoneController = TextEditingController();
+
+    void _login() {
+
+      var loginController = Get.find<LoginController>();
+
+      String email = emailController.text.trim();
+      String password = passwordController.text.trim();
+
+      if(email.isEmpty) {
+        showCustomSnackBar("Type in your email", title: "Email");
+      } else if(password.isEmpty) {
+        showCustomSnackBar("Type in your password", title: "Password");
+      } else {
+        LoginModel loginModel = LoginModel(em: email, ps: password);
+        loginController.login(loginModel).then((status) {
+          if(int.parse(status.code) == 200) {
+            showCustomSnackBar("Login Success", title: "Perfect");
+            Get.toNamed(RouteHelper.getAccountPage());
+            emailController.clear();
+            passwordController.clear();
+          } else {
+            showCustomSnackBar("Login Failed");
+          }
+        });
+      }
+    }
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -66,11 +99,11 @@ class SignInPage extends StatelessWidget {
             SizedBox(height: Dimensions.height20,),
             AppTextField(textController: emailController,
                 hintText: "Email",
-                icon: Icons.email),
+                icon: Icons.email, obsecure: false),
             SizedBox(height: Dimensions.height20,),
             AppTextField(textController: passwordController,
                 hintText: "Password",
-                icon: Icons.password_sharp),
+                icon: Icons.password_sharp, obsecure: true,),
             SizedBox(height: Dimensions.height20,),
             // Row(
             //   children: [
@@ -95,10 +128,15 @@ class SignInPage extends StatelessWidget {
                   borderRadius: BorderRadius.circular(Dimensions.radius30),
                   color: AppColor.mainColor
               ),
-              child: Center(
-                child: BigText(text: "Sign in",
-                  size: Dimensions.font20 + Dimensions.font20/2,
-                  color: Colors.white,),
+              child: GestureDetector(
+                onTap: (){
+                  _login();
+                },
+                child: Center(
+                    child: BigText(text: "Sign in",
+                      size: Dimensions.font20 + Dimensions.font20/2,
+                      color: Colors.white,),
+                  ),
               ),
             ),
             SizedBox(height: Dimensions.screenHeight*0.05,),

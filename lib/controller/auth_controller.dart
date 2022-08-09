@@ -1,7 +1,11 @@
 
+import 'dart:convert';
+
 import 'package:dapurgo/models/response_model.dart';
+import 'package:dapurgo/models/signin_model.dart';
 import 'package:dapurgo/models/signup_body_model.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart' as http;
 
 import '../data/repository/auth_repo.dart';
 
@@ -16,16 +20,25 @@ class AuthController extends GetxController implements GetxService {
   bool _isLoading = true;
   bool get isLoading => _isLoading;
 
-  Future<ResponseModel> registration(SignUpBody signUpBody) async {
+  Future<SigninModel> registration(SignUpBody signUpBody) async {
     _isLoading = true;
-    Response response = await authRepo.registration(signUpBody);
-    late ResponseModel responseModel;
-    if(response.statusCode == 200) {
-      authRepo.saveUserToken(response.body["token"]);
-      responseModel = ResponseModel(true, response.body["token"]);
+
+    http.Response response = await authRepo.registration(signUpBody);
+
+    late SigninModel responseModel;
+
+    // print("ini response : " + response.body.toString());
+
+    responseModel = SigninModel.fromJson(jsonDecode(response.body));
+
+    if(int.parse(responseModel.code)  == 200) {
+      authRepo.saveUserToken(responseModel.result?.accessToken);
+      // responseModel = ResponseModel(true, response.body["token"]);
+      responseModel = SigninModel(result: responseModel.result, message: responseModel.message, code: responseModel.code);
     } else {
-      responseModel = ResponseModel(false, response.statusText!);
+      responseModel = SigninModel(result: null, message: responseModel.message, code: responseModel.code);
     }
+
     _isLoading = true;
 
     update();

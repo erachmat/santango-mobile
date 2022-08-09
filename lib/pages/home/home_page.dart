@@ -1,11 +1,14 @@
 import 'package:dapurgo/colors.dart';
 import 'package:dapurgo/pages/account/account_page.dart';
+import 'package:dapurgo/pages/auth/sign_in_page.dart';
 import 'package:dapurgo/pages/auth/sign_up_page.dart';
 import 'package:dapurgo/pages/cart/cart_history.dart';
 import 'package:dapurgo/pages/home/main_food_page.dart';
+import 'package:dapurgo/pages/payment/payment_method_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent-tab-view.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -19,11 +22,16 @@ class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   // late PersistentTabController _controller;
 
+  bool isLoggedIn = false;
+  String name = '';
+
   List pages = [
-    MainFoodPage (),
+    MainFoodPage(),
     // SignUpPage(),
     CartHistory(),
-    AccountPage()
+    // AccountPage()
+    SignInPage()
+    // PaymentMethodPage()
   ];
 
   void onTapNav(int index) {
@@ -31,6 +39,49 @@ class _HomePageState extends State<HomePage> {
       _selectedIndex = index;
     });
   }
+
+  @override
+  void initState() {
+    super.initState();
+    autoLogIn();
+  }
+
+  void autoLogIn() async {
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final String? userId = prefs.getString('username');
+
+    if (userId != null) {
+      setState(() {
+        isLoggedIn = true;
+        name = userId;
+      });
+      return;
+    }
+  }
+
+  Future<Null> logout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString('username', "");
+
+    setState(() {
+      name = '';
+      isLoggedIn = false;
+    });
+  }
+
+  // Future<Null> loginUser() async {
+  //
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   prefs.setString('username', nameController.text);
+  //
+  //   setState(() {
+  //     name = nameController.text;
+  //     isLoggedIn = true;
+  //   });
+  //
+  //   nameController.clear();
+  // }
 
   // @override
   // void initState() {

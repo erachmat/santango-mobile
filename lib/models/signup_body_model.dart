@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class SignUpBody {
 
   String fullname;
@@ -16,16 +18,32 @@ class SignUpBody {
     required this.idInstall,
   });
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-
-    data['fullname'] = this.fullname;
-    data['email'] = this.email;
-    data['password'] = this.password;
-    data['password_confirm'] = this.passwordConfirm;
-    data['phone'] = this.phone;
-    data['id_install'] = this.idInstall;
-
-    return data;
+  factory SignUpBody.fromJson(Map<String, dynamic> map) {
+    // return SignUpBody(em: map["em"], ps: map["ps"]);
+    return SignUpBody(fullname: map["fullname"], email: map["email"],
+        password: map["password"], passwordConfirm: map["password_confirm"],
+        phone: map["phone"], idInstall: map["id_install"]);
   }
+
+  Map<String, dynamic> toJson() {
+    return {"fullname": fullname, "email": email, "password": password, "password_confirm": passwordConfirm, "phone": phone, "id_install": idInstall};
+    // return {"em": em, "ps": ps};
+  }
+
+  @override
+  String toString() {
+    // return '{em: $em, ps: $ps}';
+    return '{fullname: $fullname, email: $email, password: $password, password_confirm: $passwordConfirm, phone: $phone, id_install: $idInstall}';
+  }
+
+}
+
+List<SignUpBody> signupFromJson(String jsonData) {
+  final data = json.decode(jsonData);
+  return List<SignUpBody>.from(data.map((item) => SignUpBody.fromJson(item)));
+}
+
+String signupToJson(SignUpBody data) {
+  final jsonData = data.toJson();
+  return json.encode(jsonData);
 }

@@ -4,7 +4,9 @@ import 'package:dapurgo/widget/account_widget.dart';
 import 'package:dapurgo/widget/big_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
+import '../../routes/routes_helper.dart';
 import '../../widget/app_icon.dart';
 
 class AccountPage extends StatelessWidget {
@@ -58,13 +60,18 @@ class AccountPage extends StatelessWidget {
                           size: Dimensions.height10*5,)
                         , bigText: BigText(text: "admin@santango.com",)),
                     SizedBox(height: Dimensions.height20,),
-                    AccountWidget(
-                        appIcon: AppIcon(icon: Icons.location_on,
-                          backgroundColor: AppColor.mainColor,
-                          iconColor: Colors.white,
-                          iconSize: Dimensions.height10*5/2,
-                          size: Dimensions.height10*5,)
-                        , bigText: BigText(text: "Jakarta",)),
+                    GestureDetector(
+                      onTap: (){
+                        Get.toNamed(RouteHelper.getAddressPage());
+                      },
+                      child: AccountWidget(
+                          appIcon: AppIcon(icon: Icons.location_on,
+                            backgroundColor: AppColor.mainColor,
+                            iconColor: Colors.white,
+                            iconSize: Dimensions.height10*5/2,
+                            size: Dimensions.height10*5,)
+                          , bigText: BigText(text: "Jakarta",)),
+                    ),
                     SizedBox(height: Dimensions.height20,),
                     AccountWidget(
                         appIcon: AppIcon(icon: Icons.message_outlined,

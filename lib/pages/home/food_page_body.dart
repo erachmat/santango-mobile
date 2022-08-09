@@ -150,17 +150,17 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                                     children: [
                                       IconAndTextWidget(
                                         icon: Icons.circle_sharp,
-                                        text: "Normal",
+                                        text: "Available",
                                         iconColor: AppColor.mainColor,
                                       ),
                                       IconAndTextWidget(
                                         icon: Icons.location_on,
-                                        text: "1.7 Km",
+                                        text: "0 Km",
                                         iconColor: AppColor.mainColor,
                                       ),
                                       IconAndTextWidget(
                                         icon: Icons.access_time_rounded,
-                                        text: "32 min",
+                                        text: "0 min",
                                         iconColor: AppColor.mainColor,
                                       ),
                                     ],
@@ -259,7 +259,6 @@ class _FoodPageBodyState extends State<FoodPageBody> {
                 padding: EdgeInsets.only(top: Dimensions.height15, left: Dimensions.height15, right: Dimensions.height15),
                 child: AppColumn(text: popularProductList.menuName!,),
               ),
-
             ),
           )
       ],

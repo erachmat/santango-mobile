@@ -10,13 +10,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../colors.dart';
+import '../../data/api/api_client.dart';
 import '../../models/signup_body_model.dart';
+import '../../routes/routes_helper.dart';
+import '../../utils/app_constants.dart';
 
 class SignUpPage extends StatelessWidget {
   const SignUpPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+
+    // final ApiClient apiClient = ApiClient(appBaseUrl: AppConstant.BASE_URL);
+    //
+    // bool _isLoading = false;
 
     var emailController = TextEditingController();
     var passwordController = TextEditingController();
@@ -46,17 +53,32 @@ class SignUpPage extends StatelessWidget {
       } else if(password.length < 6) {
         showCustomSnackBar("Password cannot be less than six characters", title: "Password");
       } else {
-        showCustomSnackBar("All went well", title: "Perfect");
+        // showCustomSnackBar("All went well", title: "Perfect");
         SignUpBody signUpBody = SignUpBody(fullname: name, email: email,
             password: password, passwordConfirm: password,
             phone: phone, idInstall: idInstall);
         authController.registration(signUpBody).then((status) {
-          if(status.isSuccess) {
-            print("Success registration ");
+
+          // print(status.code);
+
+          if(int.parse(status.code) == 200) {
+            showCustomSnackBar("Register Success", title: "Perfect");
+            Get.toNamed(RouteHelper.getInitial());
+            nameController.clear();
+            phoneController.clear();
+            emailController.clear();
+            passwordController.clear();
           } else {
-            showCustomSnackBar(status.message);
+            showCustomSnackBar("Register Failed");
           }
         });
+        // authController.registration(signUpBody).then((status) {
+        //   if(status.isSuccess) {
+        //     print("Success registration ");
+        //   } else {
+        //     showCustomSnackBar(status.message);
+        //   }
+        // });
       }
     }
 
@@ -81,19 +103,19 @@ class SignUpPage extends StatelessWidget {
             ),
             AppTextField(textController: emailController,
                 hintText: "Email",
-                icon: Icons.email),
+                icon: Icons.email, obsecure: false),
             SizedBox(height: Dimensions.height20,),
             AppTextField(textController: passwordController,
                 hintText: "Password",
-                icon: Icons.password_sharp),
+                icon: Icons.password_sharp, obsecure: true),
             SizedBox(height: Dimensions.height20,),
             AppTextField(textController: nameController,
                 hintText: "Name",
-                icon: Icons.person),
+                icon: Icons.person, obsecure: false),
             SizedBox(height: Dimensions.height20,),
             AppTextField(textController: phoneController,
                 hintText: "Phone",
-                icon: Icons.phone),
+                icon: Icons.phone, obsecure: false),
             SizedBox(height: Dimensions.height20,),
 
             GestureDetector(
@@ -126,12 +148,13 @@ class SignUpPage extends StatelessWidget {
                 )
             ),
             SizedBox(height: Dimensions.screenHeight*0.05,),
-            CircleAvatar(
-              radius: Dimensions.radius30,
-              backgroundImage: AssetImage(
-                "assets/image/g.png"
-              ),
-            )
+            // CircleAvatar(
+            //   backgroundColor: Colors.transparent,
+            //   radius: Dimensions.radius20,
+            //   backgroundImage: AssetImage(
+            //     "assets/image/g.png"
+            //   ),
+            // ),
           ],
         ),
       ),

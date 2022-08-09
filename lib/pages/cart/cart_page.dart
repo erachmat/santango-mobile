@@ -204,6 +204,7 @@ class CartPage extends StatelessWidget {
               GestureDetector(
                 onTap: (){
                   cartProducts.addToHistory();
+                  Get.toNamed(RouteHelper.addAddress);
                 },
                 child: Container(
                   padding: EdgeInsets.only(top: Dimensions.height20,
